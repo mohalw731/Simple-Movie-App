@@ -2,10 +2,10 @@ const movieNameRef = document.getElementById("movie-name");
 const searchBtn = document.getElementById("search-btn");
 const result = document.getElementById("result");
 
-const API_BASE_URL = 'http://www.omdbapi.com/?t='
+const API_BASE_URL = "https://www.omdbapi.com/?t=";
 
-const renderMovie = data => {
-    const movieData = `
+const renderMovie = (data) => {
+  const movieData = `
     <div class="info">
         <img src=${data.Poster} class="poster">
         <div>
@@ -31,28 +31,26 @@ const renderMovie = data => {
     
 `;
 
-    result.insertAdjacentHTML("beforeend", movieData)
-} 
+  result.insertAdjacentHTML("beforeend", movieData);
+};
 
 const clickHandler = async () => {
-    try{
-     const userInput = movieNameRef.value
-     const res = await fetch(`${API_BASE_URL}=${userInput}&apikey=4bf61606`);
-     const data = await res.json()
-    
-     if(!res.ok){
-        throw new Error(data.description)
-     }else if(userInput === '') {
-        alert('Enter movie name')
-     }else {
-        result.innerHTML = ''
-     renderMovie(data)
-     }
-     
-    }catch(error) {
-        result.innerHTML = `<h3 class="msg">${error}</h3>`;
+  try {
+    const userInput = movieNameRef.value;
+    const res = await fetch(`${API_BASE_URL}=${userInput}&apikey=4bf61606`);
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.description);
+    } else if (userInput === "") {
+      alert("Enter movie name");
+    } else {
+      result.innerHTML = "";
+      renderMovie(data);
     }
+  } catch (error) {
+    result.innerHTML = `<h3 class="msg">${error}</h3>`;
+  }
+};
 
-}
-
-searchBtn.addEventListener('click', clickHandler)
+searchBtn.addEventListener("click", clickHandler);
