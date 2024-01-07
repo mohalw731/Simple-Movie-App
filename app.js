@@ -34,9 +34,16 @@ const renderMovie = (data) => {
   result.insertAdjacentHTML("beforeend", movieData);
 };
 
-const clickHandler = async () => {
-  try {
+const clickHandler = async () => { 
     const userInput = movieNameRef.value;
+    const forbidenPattern = /<script>/;
+    const patternMatch = forbidenPattern.test(userInput);
+    if (patternMatch) {
+        result.innerHTML = `<h3 class="msg">You cant use that</h3>`;
+      return;
+    }
+
+  try {
     const res = await fetch(`${API_BASE_URL}=${userInput}&apikey=4bf61606`);
     const data = await res.json();
 
